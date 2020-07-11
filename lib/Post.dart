@@ -1,29 +1,50 @@
+import 'dart:convert';
+
 class Post {
-  int _userId;
-  int _id;
-  String _title;
-  String _body;
+  int userId;
+  int id;
+  String title;
+  String body;
 
   Post(
-    this._userId,
-    this._id,
-    this._title,
-    this._body,
+    this.userId,
+    this.id,
+    this.title,
+    this.body,
   );
 
-  int get userId => _userId;
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> result = Map();
 
-  set userId(int value) => _userId = value;
+    if (userId != null) {
+      result['userId'] = userId;
+    }
+    if (id != null) {
+      result['id'] = id;
+    }
+    if (title != null) {
+      result['title'] = title;
+    }
 
-  int get id => _id;
+    if (body != null) {
+      result['body'] = body;
+    }
 
-  set id(int value) => _id = value;
+    return result;
+  }
 
-  String get title => _title;
+  static Post fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
 
-  set title(String value) => _title = value;
+    return Post(
+      map['userId'],
+      map['id'],
+      map['title'],
+      map['body'],
+    );
+  }
 
-  String get body => _body;
+  String toJson() => json.encode(toMap());
 
-  set body(String value) => _body = value;
+  static Post fromJson(String source) => fromMap(json.decode(source));
 }
